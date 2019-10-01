@@ -947,11 +947,7 @@ inline Tensor Tensor::new_empty(IntArrayRef size, c10::optional<ScalarType> dtyp
     return TypeDefault::new_empty(const_cast<Tensor&>(*this), size, dtype, layout, device, pin_memory);
 #else
     static auto table = globalATenDispatch().getOpTable("aten::new_empty(Tensor self, int[] size, *, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor");
-<<<<<<< HEAD
-    return table->callUnboxed<Tensor, const Tensor &, IntArrayRef, c10::optional<ScalarType>, c10::optional<Layout>, c10::optional<Device>, c10::optional<bool>>(const_cast<Tensor&>(*this), size, size, dtype, layout, device, pin_memory);
-=======
-    return table->getOp<Tensor (const Tensor &, IntArrayRef, c10::optional<ScalarType>, c10::optional<Layout>, c10::optional<Device>, c10::optional<bool>)>(at::detail::multi_dispatch_tensor_type_set(dtype, layout, device, pin_memory))(const_cast<Tensor&>(*this), size, dtype, layout, device, pin_memory);
->>>>>>> updated gen_pyi.py and multiple dispatch
+    return table->callUnboxed<Tensor, const Tensor &, IntArrayRef, c10::optional<ScalarType>, c10::optional<Layout>, c10::optional<Device>, c10::optional<bool>>(const_cast<Tensor&>(*this), size, dtype, layout, device, pin_memory);
 #endif
 }
 inline Tensor Tensor::new_full(IntArrayRef size, Scalar fill_value, c10::optional<ScalarType> dtype, c10::optional<Layout> layout, c10::optional<Device> device, c10::optional<bool> pin_memory) const {
@@ -959,11 +955,7 @@ inline Tensor Tensor::new_full(IntArrayRef size, Scalar fill_value, c10::optiona
     return TypeDefault::new_full(const_cast<Tensor&>(*this), size, fill_value, dtype, layout, device, pin_memory);
 #else
     static auto table = globalATenDispatch().getOpTable("aten::new_full(Tensor self, int[] size, Scalar fill_value, *, ScalarType? dtype=None, Layout? layout=None, Device? device=None, bool? pin_memory=None) -> Tensor");
-<<<<<<< HEAD
-    return table->callUnboxed<Tensor, const Tensor &, IntArrayRef, Scalar, Scalar, c10::optional<ScalarType>, c10::optional<Layout>, c10::optional<Device>, c10::optional<bool>>(const_cast<Tensor&>(*this), size, fill_value, dtype, layout, device, pin_memory);
-=======
-    return table->getOp<Tensor (const Tensor &, IntArrayRef, Scalar, c10::optional<ScalarType>, c10::optional<Layout>, c10::optional<Device>, c10::optional<bool>)>(at::detail::multi_dispatch_tensor_type_set(dtype, layout, device, pin_memory))(const_cast<Tensor&>(*this), size, fill_value, dtype, layout, device, pin_memory);
->>>>>>> updated gen_pyi.py and multiple dispatch
+    return table->callUnboxed<Tensor, const Tensor &, IntArrayRef, Scalar, c10::optional<ScalarType>, c10::optional<Layout>, c10::optional<Device>, c10::optional<bool>>(const_cast<Tensor&>(*this), size, fill_value, dtype, layout, device, pin_memory);
 #endif
 }
 inline Tensor & Tensor::resize_(IntArrayRef size) const {
@@ -3384,15 +3376,7 @@ inline Tensor Tensor::to(ScalarType dtype, Layout layout, Device device, bool pi
     return TypeDefault::to(const_cast<Tensor&>(*this), dtype, layout, device, pin_memory, non_blocking, copy);
 #else
     static auto table = globalATenDispatch().getOpTable("aten::to.dtype_layout(Tensor self, *, ScalarType dtype, Layout layout, Device device, bool pin_memory=False, bool non_blocking=False, bool copy=False) -> Tensor");
-<<<<<<< HEAD
-<<<<<<< HEAD
-    return table->callUnboxed<Tensor, const Tensor &, const TensorOptions &, bool, bool>(const_cast<Tensor&>(*this), options, non_blocking, copy);
-=======
-    return table->getOp<Tensor (const Tensor &, ScalarType, Layout, Device, bool, bool, bool)>(at::detail::multi_dispatch_tensor_type_set(*this))(const_cast<Tensor&>(*this), dtype, layout, device, pin_memory, non_blocking, copy);
->>>>>>> Declarations.yaml
-=======
-    return table->getOp<Tensor (const Tensor &, ScalarType, Layout, Device, bool, bool, bool)>(at::detail::multi_dispatch_tensor_type_set(dtype, layout, device, pin_memory))(const_cast<Tensor&>(*this), dtype, layout, device, pin_memory, non_blocking, copy);
->>>>>>> updated gen_pyi.py and multiple dispatch
+    return table->callUnboxed<Tensor, const Tensor &, ScalarType, Layout, Device, bool, bool, bool>(const_cast<Tensor&>(*this), dtype, layout, device, pin_memory, non_blocking, copy);
 #endif
 }
 inline Tensor Tensor::to(Device device, ScalarType dtype, bool non_blocking, bool copy) const {
