@@ -543,8 +543,6 @@ class ScriptModuleSerializer {
       bool bytecode_format) {
     C10_LOG_API_USAGE_ONCE("torch.script.save");
     writeExtraFiles(module, extra_files);
-    // Serialize all code info.
-    writeCode(module.type());
     // The tensor constants from the code are written to a separate archive
     // so loading the code does not depend on loading the data
     std::vector<IValue> ivalue_constants(
@@ -553,18 +551,23 @@ class ScriptModuleSerializer {
     if (bytecode_format) {
       writeByteCode(module);
     }
-    // finally we serialize the model
+    // Serialize the model
     writeArchive("data", module.module_object());
+    // Finally we werialize all code info.
+    writeCode(module.type());
   }
 
  private:
   void writeArchive(const std::string& archive_name, const IValue& value) {
     std::vector<char> data;
+    // Vector to capture the run-time class types during pickling the IValues
+    std::vector<c10::ClassTypePtr> memorizedClassTypes;
     Pickler data_pickle(
         [&](const char* buf, size_t size) {
           data.insert(data.end(), buf, buf + size);
         },
-        nullptr);
+        nullptr,
+        &memorizedClassTypes);
     data_pickle.protocol();
     data_pickle.pushIValue(value);
     data_pickle.stop();
@@ -577,6 +580,11 @@ class ScriptModuleSerializer {
     std::stringstream fname;
     fname << archive_name << ".pkl";
     writer_.writeRecord(fname.str(), data.data(), data.size());
+
+    // serialize all the captured run-time class types
+    for (const c10::ClassTypePtr& wroteType : memorizedClassTypes) {
+      convertNamedType(wroteType);
+    }
   }
 
   void writeExtraFiles(
