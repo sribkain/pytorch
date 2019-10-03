@@ -215,6 +215,7 @@ Pointwise Ops
 .. autofunction:: logical_not
 .. autofunction:: logical_xor
 .. autofunction:: mul
+.. autofunction:: mul_relu
 .. autofunction:: mvlgamma
 .. autofunction:: neg
 .. autofunction:: pow
