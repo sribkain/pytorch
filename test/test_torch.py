@@ -10650,7 +10650,7 @@ class TestTorchDeviceType(TestCase):
             if dt == torch.bfloat16:
                 self.assertRaises(RuntimeError, lambda: torch.randint(5, (0, 1, 3, 0), dtype=dt, device=device))
                 continue
-            
+
             if dt == torch.half and device == 'cpu':
                 # fix once random is implemented for Half on CPU
                 self.assertRaises(RuntimeError, lambda: torch.randint(5, (0, 1, 3, 0), dtype=dt, device=device))
@@ -10728,7 +10728,6 @@ class TestTorchDeviceType(TestCase):
                 self.assertEqual(shape, torch.empty(shape, device=device, dtype=dt).shape)
                 self.assertEqual(shape, torch.empty_like(torch.zeros(shape, device=device, dtype=dt)).shape)
                 self.assertEqual(shape, torch.empty_strided(shape, (0,) * len(shape), device=device, dtype=dt).shape)
-                    
 
                 if dt == torch.half and device == "cpu":
                     # update once random is implemented for half on CPU
